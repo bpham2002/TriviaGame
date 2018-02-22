@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .blue {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="main">
+        <button id="start">Start</button>
+    </div>
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var triviaQuest = [{
+                question: 'Leopards are a part of the biological family of _____',
+                answers: ["Cats", "Dogs", "Lions", "Tigers"],
+                correctAns: 0
+            }]
+            var num = 0
+            var correct = 0
+            var uncorrect = 0
+            $("#start").on("click", function() {
+                $("#main").empty()
+                disQuest()
+                $(document).on("click", "#selected-answer", function() {
+                    correct = checkAns($(this).attr("value"), correct, uncorrect)
+
+                })
+                console.log(correct)
+
+                function disQuest() {
+
+                    var quest = $("<h2 id='question'>'" + triviaQuest[num].question + "'</h2>")
+                    var list = $("<ul id = 'answer-list' type ='A'></ul>")
+                    $("#main").append(quest, list)
+                    for (var i = 0; i < triviaQuest[num].answers.length; i++) {
+                        $("#answer-list").append($("<li  id = 'selected-answer' value ='" + i + "'>'" + triviaQuest[num].answers[i] + "'</li>"))
+
+                    }
+                    $("li").hover(function() {
+                        $(this).addClass("blue")
+                    }, function() {
+                        $(this).removeClass("blue")
+                    })
+                    var time = 30
+                    $("#question").before($("<p><b>Time remain: </b><span id= 'time-remain'></span></p>"))
+                    countDown(time)
+                }
+
+                function checkAns(ans, cor, uncor) {
+                    if (parseInt(ans) === triviaQuest[num].correctAns) {
+                        alert("correct")
+                        cor++
+                    } else {
+                        alert("uncorrect")
+                        uncor++
+                    }
+
+
+                    return cor
+
+                }
+
+                function countDown(t) {
+
+                    var count = setInterval(function() {
+
+                        $("#time-remain").text(t-- + " seconds")
+                    }, 1000)
+                    setTimeout(function() {
+
+
+                        clearInterval(count)
+                    }, 31000)
+
+
+                };
+
+            })
+
+
+
+        })
+    </script>
+</body>
+
+</html>
