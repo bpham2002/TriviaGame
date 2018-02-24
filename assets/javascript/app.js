@@ -25,13 +25,13 @@
      var uncorrect = 0
      var selectedAns
      var isAnswerSelected = false;
-     var time = 30
+     var time = 10
      $("#start").on("click", function() {
 
          disQuest(numQuest);
      });
      $(document).on("click", "#selected-answer", function() {
-         //  selectedAns = triviaQuest[numQuest].answers[$(this).val()];
+
          isAnswerSelected = true;
          for (var i = 0; i < triviaQuest[numQuest].answers.length; i++) {
              document.getElementById(i).checked = false;
@@ -70,11 +70,9 @@
      function checkAns(ans) {
 
          if (ans === triviaQuest[numQuest].correctAns) {
-             alert("correct")
              correct++
 
          } else {
-             alert("uncorrect")
              uncorrect++
 
          }
@@ -90,18 +88,11 @@
          }, 1000)
          setTimeout(function() {
              if (isAnswerSelected) {
-
                  checkAns(selectedAns);
-
-
              } else {
                  uncorrect++
                  selectedAns = null
-                 alert("unselected")
              }
-             console.log(selectedAns)
-             console.log("correct: " + correct)
-             console.log("uncorrect: " + uncorrect)
              if (numQuest < triviaQuest.length - 1) {
                  numQuest++
                  disQuest(numQuest)
@@ -117,7 +108,7 @@
              }
              isAnswerSelected = false;
              clearInterval(count)
-         }, 31000)
+         }, 11000)
      };
 
      function displayResults() {
