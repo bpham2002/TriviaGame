@@ -49,10 +49,10 @@
 
          var quest = $("<h2 id='question'></h2> ")
          quest.append(triviaQuest[num].question);
-         var ulist = $("<ul id = 'answer-list' type ='circle'></ul>")
+         var ulist = $("<ul class = 'list-group' id = 'answer-list'></ul>")
          $("#main").append(quest, ulist);
          for (var i = 0; i < triviaQuest[num].answers.length; i++) {
-             var list = $("<li  id = 'selected-answer' value = '" + i + "'></li>")
+             var list = $("<li class = 'list-group-item' id = 'selected-answer' value = '" + i + "'></li>")
              list.append($("<input type = 'checkbox' class = 'check-box' id = '" + i + "'>"))
              list.append(triviaQuest[num].answers[i])
              ulist.append(list)
@@ -69,7 +69,6 @@
 
      function checkAns(ans) {
 
-
          if (ans === triviaQuest[numQuest].correctAns) {
              alert("correct")
              correct++
@@ -79,8 +78,6 @@
              uncorrect++
 
          }
-
-
      }
 
      function countDown(t) {
@@ -89,7 +86,7 @@
 
          var count = setInterval(function() {
 
-             $("#time-remain").text(t-- + " seconds")
+             $("#time-remain").text(t-- + " s")
          }, 1000)
          setTimeout(function() {
              if (isAnswerSelected) {
@@ -108,16 +105,35 @@
              if (numQuest < triviaQuest.length - 1) {
                  numQuest++
                  disQuest(numQuest)
+             } else {
+                 $("#main").empty()
+                 displayResults()
+                 setTimeout(function() {
+                     numQuest = 0;
+                     correct = 0;
+                     uncorrect = 0;
+                     disQuest(numQuest);
+                 }, 10000);
              }
              isAnswerSelected = false;
              clearInterval(count)
          }, 31000)
-
-
      };
 
+     function displayResults() {
 
-
-
-
+         if (correct === 5) {
+             var comment = $("<h2>YOU DID GREAT!</h2>")
+             var results = $("<p>Your Answers <br> Correct: <span id='correct'></span> <br> Uncorrect: <span id='uncorrect'></span></p>")
+             $("#main").append(comment, results)
+             $("#correct").text(correct)
+             $("#uncorrect").text(uncorrect)
+         } else {
+             var comment = $("<h2>TRY AGAIN</h2>")
+             var results = $("<p>Your Answers <br> Correct: <span id='correct'></span> <br> Uncorrect: <span id='uncorrect'></span></p>")
+             $("#main").append(comment, results)
+             $("#correct").text(correct)
+             $("#uncorrect").text(uncorrect)
+         }
+     }
  })
